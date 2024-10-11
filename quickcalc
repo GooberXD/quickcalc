@@ -1,0 +1,122 @@
+# "IM CRUCIFIEDDD FOR THE HOLY DIMENSION, SAINT LIKE BEHAVIORRRRRR"
+import tkinter as tk
+import math
+
+# updating input field when buttons pressed
+def button_click(item):
+    current = input_text.get()
+    input_text.set(current + str(item))
+
+# clears input field
+def button_clear():
+    input_text.set("")
+
+# function that calcs and also saves it in temp history
+def button_equal():
+    try:
+        operation = input_text.get()
+        result = str(eval(operation))  # Evaluates the string expression
+        input_text.set(result)
+        # operation history very skubiut
+        history_text.set(history_text.get() + operation + " = " + result + "\n")
+    except:
+        input_text.set("Error")
+
+# its for the square root function, yipee
+def button_sqrt():
+    try:
+        current = input_text.get()
+        result = str(math.sqrt(float(current)))
+        input_text.set(result)
+        # operation history
+        history_text.set(history_text.get() + "√(" + current + ") = " + result + "\n")
+    except:
+        input_text.set("Error")
+
+# this makes the pi function, thnx gpt :3
+def button_pi():
+    current = input_text.get()
+    input_text.set(current + str(math.pi))
+
+window = tk.Tk()
+window.title("QuickCalc By GooberXD")
+window.geometry("600x600")
+window.configure(bg="lightgray")
+window.iconbitmap('skibidi.ico')
+
+window.columnconfigure(0, weight=3)
+window.columnconfigure(1, weight=1)
+window.rowconfigure(1, weight=1)
+
+input_text = tk.StringVar()
+
+# Input field setup for newbies
+input_frame = tk.Frame(window, width=600, height=500, bd=0, bg="white")
+input_frame.pack(side=tk.TOP, fill=tk.BOTH)
+
+input_field = tk.Entry(input_frame, textvar=input_text, font=('Alef', 18), width=30, justify="right", bd=0, bg="white")
+input_field.pack(ipady=10, fill=tk.BOTH)
+
+# History panel setup 
+history_frame = tk.Frame(window, width=500, height=450, bg="white")
+history_frame.pack(side=tk.RIGHT, fill=tk.BOTH)
+
+history_label = tk.Label(history_frame, text="ඞ History ඞ", font=('Alef', 14), bg="lightgray", anchor="w")
+history_label.pack(fill=tk.X)
+
+# Text widget for displaying the calcs history
+history_text = tk.StringVar()
+history_display = tk.Label(history_frame, textvariable=history_text, font=('Alef', 12), bg="white", anchor="nw", justify="left")
+history_display.pack(expand=True, fill=tk.BOTH, padx=5, pady=5)
+
+# Button frame setup (left side, thanks gpt for funi suggestions)
+button_frame = tk.Frame(window, width=400, height=450, bg="gray")
+button_frame.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)
+
+# button layouts
+buttons = [
+    '(', ')', '√', 'π', 
+    '7', '8', '9', '/', 
+    '4', '5', '6', '*', 
+    '1', '2', '3', '-', 
+    'C', '0', '%', '+', 
+    '='
+]
+
+row = 0
+col = 0
+for button in buttons:
+    if button == "=":
+        btn = tk.Button(button_frame, text=button, font=('Alef', 18), fg='white', bg='green', height=2, width=9, command=button_equal)
+        btn.grid(row=row, column=col, columnspan=4, padx=1, pady=1, sticky="nsew")  
+        col += 2  
+    elif button == "C":
+        btn = tk.Button(button_frame, text=button, font=('Alef', 18), fg='white', bg='red', height=2, width=9, command=button_clear)
+        btn.grid(row=row, column=col, padx=1, pady=1, sticky="nsew")
+    elif button == "√":
+        btn = tk.Button(button_frame, text=button, font=('Alef', 18), fg='black', bg='lightblue', height=2, width=9, command=button_sqrt)
+        btn.grid(row=row, column=col, padx=1, pady=1, sticky="nsew")
+    elif button == "π":
+        btn = tk.Button(button_frame, text=button, font=('Alef', 18), fg='black', bg='lightblue', height=2, width=9, command=button_pi)
+        btn.grid(row=row, column=col, padx=1, pady=1, sticky="nsew")
+    else:
+        btn = tk.Button(button_frame, text=button, font=('Alef', 18), fg='black', bg='lightblue', height=2, width=9, command=lambda b=button: button_click(b))
+        btn.grid(row=row, column=col, padx=1, pady=1, sticky="nsew")
+
+    col += 1
+    if col > 3:
+        col = 0
+        row += 1
+
+# this one adjusts the buttons (took embarasing amont of time to figute out send hel)
+for i in range(5):
+    button_frame.rowconfigure(i, weight=1)
+    for j in range(4):
+        button_frame.columnconfigure(j, weight=1)
+
+window.mainloop()
+
+#v2, its functional and looks bit prettier now, likely final
+
+#special thanks to amogus ico for obliterating exe for fun
+#specialspecial thanks to the sciming matches for giving me brain aneurysm to make this
